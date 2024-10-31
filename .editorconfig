@@ -1,0 +1,38 @@
+# EditorConfig file for Python and Flask project
+# http://editorconfig.org
+
+# Top-most EditorConfig file
+root = true
+
+# General configuration for all files
+[*]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 4
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+# Python-specific settings
+[*.py]
+indent_size = 4
+
+# Configuration for HTML and Jinja2 template files
+[*.{html,jinja,jinja2}]
+indent_style = space
+indent_size = 2
+
+# Configuration for YAML files (e.g., configuration files)
+[*.{yml,yaml}]
+indent_style = space
+indent_size = 2
+
+# Configuration for JSON files
+[*.json]
+indent_style = space
+indent_size = 2
+
+# Configuration for Markdown files
+[*.md]
+trim_trailing_whitespace = false
+max_line_length = off
