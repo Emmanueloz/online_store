@@ -4,4 +4,34 @@
 
 {% block content %}
 <h1>Productos</h1>
+<a href="{{ url_for('products.create') }}">Crear Producto</a>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Descripción</th>
+      <th>Precio</th>
+      <th>Cantidad</th>
+      <th>Categoría</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for product in products %}
+    <tr>
+      <td>{{ product.name }}</td>
+      <td>{{ product.description }}</td>
+      <td>{{ product.price }}</td>
+      <td>{{ product.amount }}</td>
+      <td>{{ product.category }}</td>
+      <td>
+        <a>Editar</a>
+        <a>Borrar</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
 {% endblock %}

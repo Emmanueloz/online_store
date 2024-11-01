@@ -1,0 +1,21 @@
+{% extends "layout.jinja2" %}
+
+{% block title %}Crear Producto{% endblock %}
+
+{% block content %}
+<form method="post">
+  {{ form.csrf_token }}
+  {{form.name.label}}
+  {{form.name}}
+  {{form.description.label}}
+  {{form.description}}
+  {{form.price.label}}
+  {{form.price(min=0.00)}}
+  {{form.amount.label}}
+  {{form.amount(min=0)}}
+  {{form.category.label}}
+  {{form.category}}
+  <input type="submit" value="Crear">
+
+</form>
+{% endblock content %}
