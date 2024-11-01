@@ -1,6 +1,7 @@
 from flask import Flask
 from app.config import Config
 from app.database import db
+from app.auth import login_manager
 
 
 def create_app():
@@ -8,6 +9,7 @@ def create_app():
     app.config.from_object(Config)
 
     db.init_app(app)
+    login_manager.init_app(app)
 
     from app.features.home import home_bp
     app.register_blueprint(home_bp)
