@@ -5,4 +5,32 @@
 {% block content %}
 <h1>Bienvenido a la página de inicio</h1>
 <p>Contenido específico de inicio.</p>
+
+<h2>
+  Productos
+  {% if category %}
+  de {{ category }}
+  {% endif %}
+</h2>
+
+{% if products %}
+
+<section>
+
+
+  {% for product in products %}
+  <article>
+    <h3>{{ product.name }}</h3>
+    <p>Precio: {{ product.price }}</p>
+    <p>Cantidad: {{ product.amount }}</p>
+    <p>Categoría: {{ product.category }}</p>
+  </article>
+
+  {% endfor %}
+
+</section>
+{% else %}
+<p>No hay productos disponibles.</p>
+{% endif %}
+
 {% endblock %}
