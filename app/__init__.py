@@ -3,12 +3,14 @@ from app.config import Config
 from app.database import db
 from app.auth import login_manager
 from app.auth.create_admin import create_admin
+from app.inject_context import inject_context
 
 
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
 
+    app = inject_context(app)
     db.init_app(app)
     login_manager.init_app(app)
 

@@ -18,9 +18,13 @@
       <ul>
         <li><a href="{{ url_for('home.index') }}">Inicio</a></li>
         {% if current_user.is_authenticated %}
+        {% if current_user.role == Roles.ADMIN %}
+        <li><a href="{{ url_for('products.index') }}">Productos</a></li>
+        {% endif %}
         <li>
           <span>Usuario: {{ current_user.username }}</span>
         </li>
+
         <li><a href="{{ url_for('auth.logout') }}">Cerrar Sesión</a></li>
         {% else %}
         <li><a href="{{ url_for('auth.login') }}">Iniciar Sesión</a></li>
