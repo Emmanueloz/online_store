@@ -13,7 +13,22 @@
 </head>
 
 <body>
-
+  <header>
+    <nav>
+      <ul>
+        <li><a href="{{ url_for('home.index') }}">Inicio</a></li>
+        {% if current_user.is_authenticated %}
+        <li>
+          <span>Usuario: {{ current_user.username }}</span>
+        </li>
+        <li><a href="{{ url_for('auth.logout') }}">Cerrar Sesión</a></li>
+        {% else %}
+        <li><a href="{{ url_for('auth.login') }}">Iniciar Sesión</a></li>
+        <li><a href="{{ url_for('auth.register') }}">Registro</a></li>
+        {% endif %}
+      </ul>
+    </nav>
+  </header>
   {% block content %}
   {% endblock content %}
 
