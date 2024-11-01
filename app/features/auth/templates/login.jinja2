@@ -3,6 +3,10 @@
 {% block title %}Página de Autenticación{% endblock %}
 
 {% block content %}
-<h1>Bienvenido al módulo de Autenticación</h1>
-<p>Contenido específico de autenticación.</p>
+<form method="post">
+  {{ form.csrf_token }}
+  {{ form.username.label }} {{ form.username }}
+  {{ form.password.label }} {{ form.password }}
+  <button type="submit">Iniciar Sesión</button>
+</form>
 {% endblock %}
