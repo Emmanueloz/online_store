@@ -31,7 +31,8 @@ def login_post():
         flash('Usuario no encontrado', 'error')
         return render_template('login.jinja2', **context)
 
-    login_user(UserLogin(user.id, user.username, user.email, user.password))
+    login_user(UserLogin(user.id, user.username,
+               user.email, user.password, user.role))
     return redirect(url_for('home.index'))
 
 
@@ -60,7 +61,7 @@ def register_post():
         db.session.add(user)
         db.session.commit()
         login_user(UserLogin(user.id, user.username,
-                   user.email, user.password))
+                   user.email, user.password, user.role))
 
         return redirect(url_for('home.index'))
     except IntegrityError:

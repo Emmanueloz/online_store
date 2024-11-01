@@ -17,4 +17,4 @@ def load_user(user_id):
     if user is None:
         return None
 
-    return UserLogin(user.id, user.username, user.email, user.password)
+    return UserLogin(user.id, user.username, user.email, user.password, role=user.role)
