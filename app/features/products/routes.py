@@ -54,3 +54,12 @@ def create_product():
         flash("Error al crear el producto", 'error')
         print(e)
         return redirect(url_for('products.create'))
+
+
+@products_bp.get('/products/<int:id>/delete/')
+@role_authenticate([Roles.ADMIN])
+def delete(id):
+    product = Product.query.get(id)
+    db.session.delete(product)
+    db.session.commit()
+    return redirect(url_for('products.index'))
