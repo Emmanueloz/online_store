@@ -26,7 +26,7 @@ def create():
     context = {
         'form': FormProduct()
     }
-    return render_template('create_product.jinja2', **context)
+    return render_template('form_product.jinja2', **context)
 
 
 @products_bp.post('/products/create/')
@@ -35,12 +35,12 @@ def create_product():
 
     form: FormProduct = FormProduct()
     context = {
-        'form': form
+        'form': form,
     }
 
     if not form.validate_on_submit():
         print(form.errors)
-        return render_template('create_product.jinja2', **context)
+        return render_template('form_product.jinja2', **context)
 
     try:
         product = Product(form.name.data, form.description.data,
@@ -54,6 +54,57 @@ def create_product():
         flash("Error al crear el producto", 'error')
         print(e)
         return redirect(url_for('products.create'))
+
+
+@products_bp.get('/products/<int:id>/edit/')
+@role_authenticate([Roles.ADMIN])
+def edit(id):
+    product = Product.query.get(id)
+    form: FormProduct = FormProduct()
+
+    if not product:
+        flash("Producto no encontrado", 'error')
+        return redirect(url_for('products.index'))
+
+    form.name.data = product.name
+    form.description.data = product.description
+    form.price.data = product.price
+    form.amount.data = product.amount
+    form.category.data = product.category
+
+    context = {
+        'form': form,
+    }
+    return render_template('form_product.jinja2', **context)
+
+
+@products_bp.post('/products/<int:id>/edit/')
+@role_authenticate([Roles.ADMIN])
+def edit_product(id):
+
+    form: FormProduct = FormProduct()
+    context = {
+        'form': form,
+    }
+
+    if not form.validate_on_submit():
+        print(form.errors)
+        return render_template('form_product.jinja2', **context)
+
+    try:
+        product: Product = Product.query.get(id)
+        product.name = form.name.data
+        product.description = form.description.data
+        product.price = form.price.data
+        product.amount = form.amount.data
+        product.category = form.category.data
+
+        db.session.commit()
+        return redirect(url_for('products.index'))
+    except Exception as e:
+        flash("Error al editar el producto", 'error')
+        print(e)
+        return redirect(url_for('products.edit', id=id))
 
 
 @products_bp.get('/products/<int:id>/delete/')
