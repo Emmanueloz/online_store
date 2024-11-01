@@ -2,6 +2,7 @@ from flask import Flask
 from app.config import Config
 from app.database import db
 from app.auth import login_manager
+from app.auth.create_admin import create_admin
 
 
 def create_app():
@@ -18,5 +19,6 @@ def create_app():
 
     with app.app_context() as ctx:
         db.create_all()
+        create_admin()
 
     return app
