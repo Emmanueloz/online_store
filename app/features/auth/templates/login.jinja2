@@ -3,10 +3,34 @@
 {% block title %}Página de Autenticación{% endblock %}
 
 {% block content %}
-<form method="post">
-  {{ form.csrf_token }}
-  {{ form.username.label }} {{ form.username }}
-  {{ form.password.label }} {{ form.password }}
-  <button type="submit">Iniciar Sesión</button>
-</form>
+<main class="container-fluid p-3">
+    <form class="col-12 col-md-8 col-lg-6 col-xl-4 mx-auto row g-3" method="post">
+        <h3>Iniciar Sesión</h3>
+        {{ form.csrf_token }}
+        <div class="mb-3">
+            {{ form.username.label(class="form-label") }}
+            {{ form.username(class="form-control") }}
+            {% if form.username.errors %}
+            <div class="invalid-feedback">
+                {% for error in form.username.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        <div class="mb-3">
+            {{ form.password.label(class="form-label") }}
+            {{ form.password(class="form-control") }}
+            {% if form.password.errors %}
+            <div class="invalid-feedback">
+                {% for error in form.password.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        <p>¿No tienes cuenta? <a href="{{ url_for('auth.register') }}">Registrate</a></p>
+        <button class="btn btn-primary" type="submit">Iniciar Sesión</button>
+    </form>
+</main>
 {% endblock %}

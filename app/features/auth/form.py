@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, TelField, SelectField
+from wtforms import StringField, PasswordField, TelField, SelectField, IntegerField
 from wtforms.validators import DataRequired, Email, EqualTo
 
 
@@ -31,13 +31,19 @@ class UserForm(AuthForm):
 
 
 class DirectionForm(FlaskForm):
-    street = StringField('Calle', validators=[DataRequired()])
-    number = StringField('Número', default='s/n')
-    city = StringField('Ciudad', validators=[DataRequired()])
-    state = StringField('Estado', validators=[DataRequired()])
-    zip_code = StringField('Código Postal', validators=[DataRequired()])
-    neighborhood = StringField('Barrio', validators=[DataRequired()])
-    phone = TelField('Teléfono', validators=[DataRequired()])
+    street = StringField('Calle', validators=[
+                         DataRequired()], render_kw={'maxlength': 100})
+    number = StringField('Número', default='s/n', render_kw={'maxlength': 100})
+    city = StringField('Ciudad', validators=[
+                       DataRequired()], render_kw={'maxlength': 100})
+    state = StringField('Estado', validators=[
+                        DataRequired()], render_kw={'maxlength': 100})
+    zip_code = IntegerField('Código Postal', validators=[
+                            DataRequired("Código Postal es requerido")], render_kw={'maxlength': 10})
+    neighborhood = StringField('Barrio', validators=[
+                               DataRequired()], render_kw={'maxlength': 100})
+    phone = TelField('Teléfono', validators=[
+                     DataRequired("Teléfono es requerido")], render_kw={'maxlength': 10, 'minlength': 10, 'pattern': r'^[0-9]{10}$'})
     country = SelectField('País', validators=[DataRequired()], choices=[
         ('mx', 'México'),
         ('us', 'Estados Unidos'),

@@ -52,6 +52,7 @@ def register_post():
     context = {'form': form}
 
     if not form.validate_on_submit():
+        print(form.confirm_password.errors)
         return render_template('register.jinja2', **context)
 
     try:

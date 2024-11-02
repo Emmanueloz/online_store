@@ -4,20 +4,144 @@
 
 {% block content %}
 
-<form method="post">
-    {{ form.csrf_token }}
-    {{ form.username.label }} {{ form.username }}
-    {{ form.email.label }} {{ form.email }}
-    {{ form.password.label }} {{ form.password }}
-    {{ form.confirm_password.label }} {{ form.confirm_password }}
-    {{ form.street.label }} {{ form.street }}
-    {{ form.number.label }} {{ form.number }}
-    {{ form.city.label }} {{ form.city }}
-    {{ form.state.label }} {{ form.state }}
-    {{ form.country.label }} {{ form.country }}
-    {{ form.zip_code.label }} {{ form.zip_code }}
-    {{ form.neighborhood.label }} {{ form.neighborhood }}
-    {{ form.phone.label }} {{ form.phone }}
-    <button type="submit">Registrar</button>
-</form>
+<main class="container-fluid p-3">
+    <form class="col-12 col-md-8 col-lg-6 mx-auto row g-3 {{ 'was-validated' if form.errors }}" method="post">
+        <h3>Registro de Usuario</h3>
+        {{ form.csrf_token }}
+        <div class="mb-3 col-md-6">
+            {{ form.username.label(class="form-label") }}
+            {{ form.username(class="form-control") }}
+            {% if form.username.errors %}
+            <div class="invalid-feedback">
+                {% for error in form.username.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        <div class="mb-3 col-md-6">
+            {{ form.email.label(class="form-label") }}
+            {{ form.email(class="form-control") }}
+            {% if form.email.errors %}
+            <div class="invalid-feedback">
+                {% for error in form.email.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        <div class="mb-3 col-md-6">
+            {{ form.password.label(class="form-label") }}
+            {{ form.password(class="form-control") }}
+            {% if form.password.errors %}
+            <div class="invalid-feedback">
+                {% for error in form.password.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        <div class="mb-3 col-md-6">
+            {{ form.confirm_password.label(class="form-label") }}
+            {{ form.confirm_password(class="form-control") }}
+            {% if form.confirm_password.errors %}
+            <div class="invalid-feedback">
+                {% for error in form.confirm_password.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        <div class="mb-3 col-md-6">
+            {{ form.street.label(class="form-label") }}
+            {{ form.street(class="form-control") }}
+            {% if form.street.errors %}
+            <div class="invalid-feedback">
+                {% for error in form.street.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        <div class="mb-3 col-md-6">
+            {{ form.number.label(class="form-label") }}
+            {{ form.number(class="form-control") }}
+            {% if form.number.errors %}
+            <div class="invalid-feedback">
+                {% for error in form.number.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        <div class="mb-3 col-md-6">
+            {{ form.city.label(class="form-label") }}
+            {{ form.city(class="form-control") }}
+            {% if form.city.errors %}
+            <div class="invalid-feedback">
+                {% for error in form.city.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        <div class="mb-3 col-md-6">
+            {{ form.state.label(class="form-label") }}
+            {{ form.state(class="form-control") }}
+            {% if form.state.errors %}
+            <div class="invalid-feedback">
+                {% for error in form.state.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        <div class="mb-3 col-md-6">
+            {{ form.country.label(class="form-label") }}
+            {{ form.country(class="form-control") }}
+            {% if form.country.errors %}
+            <div class="invalid-feedback">
+                {% for error in form.country.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        <div class="mb-3 col-md-6">
+            {{ form.zip_code.label(class="form-label") }}
+            {{ form.zip_code(class="form-control") }}
+            {% if form.zip_code.errors %}
+            <div class="invalid-feedback">
+                {% for error in form.zip_code.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        <div class="mb-3 col-md-6">
+            {{ form.neighborhood.label(class="form-label") }}
+            {{ form.neighborhood(class="form-control") }}
+            {% if form.neighborhood.errors %}
+            <div class="invalid-feedback">
+                {% for error in form.neighborhood.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        <div class="mb-3 col-md-6">
+            {{ form.phone.label(class="form-label") }}
+            {{ form.phone(class="form-control") }}
+            {% if form.phone.errors %}
+            <div class="invalid-feedback">
+                {% for error in form.phone.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        <p>Ya tienes cuenta? <a href="{{ url_for('auth.login') }}">Iniciar Sesión</a></p>
+        <button class="btn btn-primary" type="submit">Registrar</button>
+    </form>
+</main>
 {% endblock %}
