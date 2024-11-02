@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, redirect, url_for, flash
-from app.features.auth.form import LoginForm, RegisterForm
+from app.features.auth.form import LoginForm, RegisterForm, UserForm, DirectionForm
 from app.features.auth.model import User
 from app.auth.user import UserLogin
 from app.auth.roles import Roles
@@ -87,3 +87,33 @@ def register_post():
 def logout():
     logout_user()
     return redirect(url_for('home.index'))
+
+
+@auth_bp.get('/user/')
+def get_user():
+    user: User = User.query.filter_by(id=current_user.id).first()
+    if not user:
+        flash('Usuario no encontrado', 'error')
+        return redirect(url_for('home.index'))
+
+    form_user: UserForm = UserForm()
+    form_user.username.data = user.username
+    form_user.email.data = user.email
+
+    form_direction: DirectionForm = DirectionForm()
+    form_direction.street.data = user.street
+    form_direction.number.data = user.number
+    form_direction.city.data = user.city
+    form_direction.state.data = user.state
+    form_direction.zip_code.data = user.zip_code
+    form_direction.country.data = user.country
+    form_direction.neighborhood.data = user.neighborhood
+    form_direction.phone.data = user.phone
+
+    context = {
+        'user': user,
+        'form_user': form_user,
+        'form_direction': form_direction
+    }
+
+    return render_template('user.jinja2', **context)

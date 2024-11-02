@@ -34,7 +34,7 @@
                 <li><a href="{{ url_for('orders.all_orders') }}">Todos los pedidos</a></li>
                 {% endif %}
                 <li>
-                    <span>Usuario: {{ current_user.username }}</span>
+                    <a href="{{ url_for('auth.get_user') }}">Usuario: {{ current_user.username }}</a>
                 </li>
                 <li><a href="{{ url_for('orders.user_orders') }}">Mis pedidos</a></li>
                 <li><a href="{{ url_for('auth.logout') }}">Cerrar Sesión</a></li>

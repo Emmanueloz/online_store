@@ -14,7 +14,7 @@ class LoginForm(AuthForm):
     pass
 
 
-class RegisterForm(AuthForm):
+class UserForm(AuthForm):
     email = StringField(
         'Correo',
         validators=[
@@ -29,6 +29,8 @@ class RegisterForm(AuthForm):
             EqualTo('password', message='Las contraseñas no coinciden')
         ])
 
+
+class DirectionForm(FlaskForm):
     street = StringField('Calle', validators=[DataRequired()])
     number = StringField('Número', default='s/n')
     city = StringField('Ciudad', validators=[DataRequired()])
@@ -58,3 +60,7 @@ class RegisterForm(AuthForm):
         ('uy', 'Uruguay'),
         ('ve', 'Venezuela'),
     ])
+
+
+class RegisterForm(UserForm, DirectionForm):
+    pass

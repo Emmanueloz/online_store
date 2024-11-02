@@ -1,0 +1,31 @@
+{% extends "layout.jinja2" %}
+
+{% block title %}Usuario{% endblock %}
+
+{% block content %}
+<h2>Usuario</h2>
+<form method="post">
+    {{ form_user.csrf_token }}
+    {{ form_user.username.label }} {{ form_user.username }}
+    {{ form_user.email.label }} {{ form_user.email }}
+    {{ form_user.password.label }} {{ form_user.password }}
+    {{ form_user.confirm_password.label }} {{ form_user.confirm_password }}
+    <button type="reset">Limpiar</button>
+    <button type="submit">Actualizar</button>
+</form>
+
+<h2>Dirección</h2>
+<form method="post">
+    {{ form_direction.csrf_token }}
+    {{ form_direction.street.label }} {{ form_direction.street }}
+    {{ form_direction.number.label }} {{ form_direction.number }}
+    {{ form_direction.city.label }} {{ form_direction.city }}
+    {{ form_direction.state.label }} {{ form_direction.state }}
+    {{ form_direction.zip_code.label }} {{ form_direction.zip_code }}
+    {{ form_direction.neighborhood.label }} {{ form_direction.neighborhood }}
+    {{ form_direction.phone.label }} {{ form_direction.phone }}
+    {{ form_direction.country.label }} {{ form_direction.country }}
+    <button type="reset">Limpiar</button>
+    <button type="submit">Actualizar</button>
+</form>
+{% endblock content %}
