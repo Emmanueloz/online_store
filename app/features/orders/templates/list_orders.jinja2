@@ -5,6 +5,10 @@
 {% block content %}
 <h1>Lista de pedidos</h1>
 
+{% if not orders %}
+<p>No hay pedidos</p>
+{% else %}
+
 <table>
     <thead>
         <tr>
@@ -35,11 +39,16 @@
             </td>
             <td>${{ order.total }}</td>
             <td>
+                {% if current_user.role == Roles.ADMIN %}
                 <a href="{{url_for('orders.all_order', id=order.id)}}">Ver detalles</a>
+                {% else %}
+                <a href="{{url_for('orders.user_order', id=order.id)}}">Ver detalles</a>
+                {% endif %}
             </td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
+{% endif %}
 
 {% endblock content %}

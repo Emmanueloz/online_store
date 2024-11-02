@@ -149,3 +149,29 @@ def all_order_post(id):
     db.session.commit()
     flash("Se ha actualizado el pedido", 'success')
     return redirect(url_for('orders.all_orders'))
+
+
+@orders_bp.get('/user/')
+@role_authenticate([Roles.CLIENTE, Roles.ADMIN])
+def user_orders():
+    orders = Order.query.filter(Order.user_id == current_user.id).all()
+    context = {
+        'orders': orders
+    }
+    return render_template('list_orders.jinja2', **context)
+
+
+@orders_bp.get('/user/<int:id>/')
+@role_authenticate([Roles.CLIENTE, Roles.ADMIN])
+def user_order(id):
+    order = Order.query.filter(Order.id == id).first()
+
+    if order is None:
+        flash("No se encontró el pedido", 'error')
+        return redirect(url_for('orders.user_orders'))
+
+    context = {
+        'order': order,
+    }
+
+    return render_template('order_details.jinja2', **context)

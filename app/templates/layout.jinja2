@@ -36,7 +36,7 @@
                 <li>
                     <span>Usuario: {{ current_user.username }}</span>
                 </li>
-
+                <li><a href="{{ url_for('orders.user_orders') }}">Mis pedidos</a></li>
                 <li><a href="{{ url_for('auth.logout') }}">Cerrar Sesión</a></li>
                 {% else %}
                 <li><a href="{{ url_for('auth.login') }}">Iniciar Sesión</a></li>

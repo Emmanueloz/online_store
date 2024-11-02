@@ -6,15 +6,36 @@
 {% block content %}
 
 <form method="post">
+
+    {% if current_user.role == Roles.ADMIN %}
     {{ form.csrf_token }}
+    {% endif %}
 
     <h1>Detalles del pedido</h1>
 
     <p>Nombre del cliente: {{ order.user.username }}</p>
     <p>Cantidad de productos: {{ order.items|length }}</p>
     <p>Fecha de compra: {{ order.creation_date.strftime("%d/%m/%Y %H:%M") }}</p>
-    <p>Fecha de entrega: {{ form.delivery_date }}</p>
-    <p>Estado: {{ form.state }}</p>
+    <p>
+        Fecha de entrega:
+        {% if current_user.role == Roles.ADMIN %}
+        {{ form.delivery_date }}
+        {% else %}
+        {{ order.delivery_date.strftime("%d/%m/%Y") }}
+        {% endif %}
+    </p>
+    <p>
+        Estado:
+        {% if current_user.role == Roles.ADMIN %}
+        {{ form.state }}
+        {% elif order.state == 'pending' %}
+        <span class="badge badge-warning">Pendiente</span>
+        {% elif order.state == 'sent' %}
+        <span class="badge badge-success">Enviado</span>
+        {% elif order.state == 'delivered' %}
+        <span class="badge badge-success">Entregado</span>
+        {% endif %}
+    </p>
     <p>Total: ${{ order.total }}</p>
 
     <table>
@@ -37,9 +58,12 @@
             {% endfor %}
         </tbody>
     </table>
-
+    {% if current_user.role == Roles.ADMIN %}
     <a href="{{ url_for('orders.all_orders') }}">Cancelar</a>
     <button>Guardar cambios</button>
+    {% else %}
+    <a href="{{ url_for('orders.user_orders') }}">Regresar</a>
+    {% endif %}
 </form>
 
 
