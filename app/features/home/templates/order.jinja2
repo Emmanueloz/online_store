@@ -23,7 +23,7 @@
       <td>{{ order.amount }}</td>
       <td>{{ order.category }}</td>
       <td>
-        <a href="">Quitar</a>
+        <button class="btn-remove-order" data-id_product="{{order.id}}">Quitar</button>
       </td>
     </tr>
     {% endfor %}
@@ -32,3 +32,10 @@
 
 
 {% endblock content %}
+
+{% block scripts %}
+{{ super() }}
+
+<script type="module" src="{{ url_for('home.static', filename='js/showOrders.js') }}"></script>
+
+{% endblock scripts %}

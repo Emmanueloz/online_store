@@ -10,7 +10,9 @@ const listOrders = getListOrders();
 const updateCountCarrito = () => {
     const newListOrders = getListOrders();
     if ($carritoLink) {
-        $carritoLink.href = `${$carritoLink.href}?list=${newListOrders}`;
+        const { default_href } = $carritoLink.dataset;
+
+        $carritoLink.href = `${default_href}?list=${newListOrders}`;
     }
     $carrito.innerText = newListOrders.length;
 };
