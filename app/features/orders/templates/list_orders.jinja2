@@ -24,7 +24,15 @@
             <td>{{ order.items|length }}</td>
             <td>{{ order.creation_date.strftime("%d/%m/%Y %H:%M") }}</td>
             <td>{{ order.delivery_date.strftime("%d/%m/%Y") }}</td>
-            <td>{{ order.state }}</td>
+            <td>
+                {% if order.state == 'pending' %}
+                <span class="badge badge-warning">Pendiente</span>
+                {% elif order.state == 'sent' %}
+                <span class="badge badge-success">Enviado</span>
+                {% elif order.state == 'delivered' %}
+                <span class="badge badge-success">Entregado</span>
+                {% endif %}
+            </td>
             <td>${{ order.total }}</td>
             <td>
                 <a href="{{url_for('orders.all_order', id=order.id)}}">Ver detalles</a>

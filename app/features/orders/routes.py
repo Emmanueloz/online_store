@@ -4,6 +4,7 @@ from app.auth.roles import Roles
 from app.features.products.model import Product
 from app.features.orders.model import Order, OrderItem
 from app.database import db
+from app.features.orders.forms import OrderForm
 
 orders_bp = Blueprint('orders', __name__,
                       template_folder='templates', url_prefix='/orders/', static_folder='public')
@@ -110,8 +111,41 @@ def all_order(id):
         flash("No se encontró el pedido", 'error')
         return redirect(url_for('orders.all_orders'))
 
+    form: OrderForm = OrderForm()
+    form.state.data = order.state
+    form.delivery_date.data = order.delivery_date
     context = {
-        'order': order
+        'order': order,
+        'form': form
     }
 
     return render_template('order_details.jinja2', **context)
+
+
+@orders_bp.post('/all/<int:id>/')
+@role_authenticate([Roles.ADMIN])
+def all_order_post(id):
+    order: Order = Order.query.filter(Order.id == id).first()
+
+    if order is None:
+        print("No se encontró el pedido")
+        flash("No se encontró el pedido", 'error')
+        return redirect(url_for('orders.all_orders'))
+
+    print(order)
+
+    form: OrderForm = OrderForm()
+
+    if not form.validate_on_submit():
+        context = {
+            'order': order,
+            'form': form
+        }
+
+        return render_template('order_details.jinja2', **context)
+
+    order.delivery_date = form.delivery_date.data
+    order.state = form.state.data
+    db.session.commit()
+    flash("Se ha actualizado el pedido", 'success')
+    return redirect(url_for('orders.all_orders'))
