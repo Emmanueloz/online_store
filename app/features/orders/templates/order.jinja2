@@ -3,50 +3,66 @@
 {% block title %}Página de Pedidos{% endblock %}
 
 {% block content %}
-<h1>Pedidos</h1>
 
-<table>
-    <thead>
-        <tr>
-            <th>Nombre</th>
-            <th>Categoría</th>
-            <th>Precio Unitario</th>
-            <th>Cantidad</th>
-            <th>Total</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for product,amount,total in orders %}
-        <tr>
-            <td>{{ product.name }}</td>
-            <td>{{ product.category }}</td>
-            <td>{{ product.price }}</td>
-            <td>{{ amount }}</td>
-            <td>{{ total }}</td>
-            <td>
-                <button class="btn-remove-order" data-id_product="{{product.id}}">Quitar</button>
-                {% if amount > 1 %}
-                <button class="btn-decrement-amount" data-id_product="{{product.id}}">-</button>
-                {% endif %}
+<main class="container p-3">
 
-                {% if amount < product.amount %} <button class="btn-increment-amount" data-id_product="{{product.id}}">
-                    +</button>{% endif %}
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-    <tfoot>
-        <tr>
-            <td colspan="4">Total</td>
-            <td>{{ totalOrder }}</td>
-            <td>
-                <a id="pay-link" href="{{ url_for('orders.payment', list=listOrders, amount=listAmount) }}">Comprar</a>
-            </td>
-        </tr>
+    <h1>Pedidos</h1>
 
-    </tfoot>
-</table>
+    <section class="table-responsive">
+        <table class="table table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Categoría</th>
+                    <th>Precio Unitario</th>
+                    <th>Cantidad</th>
+                    <th>Total</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product,amount,total in orders %}
+                <tr>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.category }}</td>
+                    <td>{{ product.price }}</td>
+                    <td>{{ amount }}</td>
+                    <td>{{ total }}</td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-danger btn-remove-order"
+                            data-id_product="{{product.id}}">Quitar</button>
+                        {% if amount > 1 %}
+                        <button class="btn btn-sm btn-outline-secondary  btn-decrement-amount"
+                            data-id_product="{{product.id}}">-</button>
+                        {% endif %}
+
+                        {% if amount < product.amount %} <button data-id_product="{{product.id}}"
+                            class="btn btn-sm btn-outline-dark btn-increment-amount">
+                            +
+                            </button>
+                            {% endif %}
+
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="4">Total</td>
+                    <td>{{ totalOrder }}</td>
+                    <td>
+                        <a class="btn btn-outline-dark" id="pay-link"
+                            href="{{ url_for('orders.payment', list=listOrders, amount=listAmount) }}">
+                            Comprar
+                            <span class="bi bi-cart-plus"> 🛒</span>
+                        </a>
+                    </td>
+                </tr>
+
+            </tfoot>
+        </table>
+    </section>
+</main>
 
 
 {% endblock content %}
