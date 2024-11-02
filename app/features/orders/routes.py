@@ -99,3 +99,19 @@ def all_orders():
     }
 
     return render_template('list_orders.jinja2', **context)
+
+
+@orders_bp.get('/all/<int:id>/')
+@role_authenticate([Roles.ADMIN])
+def all_order(id):
+    order = Order.query.filter(Order.id == id).first()
+
+    if order is None:
+        flash("No se encontró el pedido", 'error')
+        return redirect(url_for('orders.all_orders'))
+
+    context = {
+        'order': order
+    }
+
+    return render_template('order_details.jinja2', **context)

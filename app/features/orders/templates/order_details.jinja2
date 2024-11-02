@@ -1,0 +1,38 @@
+{% extends "layout.jinja2" %}
+
+{% block title %}Detalles del pedido{% endblock %}
+
+
+{% block content %}
+
+<h1>Detalles del pedido</h1>
+
+<p>Nombre del cliente: {{ order.user.username }}</p>
+<p>Cantidad de productos: {{ order.items|length }}</p>
+<p>Fecha de compra: {{ order.creation_date.strftime("%d/%m/%Y %H:%M") }}</p>
+<p>Fecha de entrega: {{ order.delivery_date.strftime("%d/%m/%Y") }}</p>
+<p>Estado: {{ order.state }}</p>
+<p>Total: ${{ order.total }}</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Cantidad</th>
+            <th>Precio Unitario</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in order.items %}
+        <tr>
+            <td>{{ item.product.name }}</td>
+            <td>{{ item.amount }}</td>
+            <td>${{ item.price }}</td>
+            <td>${{ item.amount * item.price }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock content %}

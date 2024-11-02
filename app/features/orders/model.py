@@ -33,6 +33,8 @@ class OrderItem(BaseModel):
     amount = Column(Integer)
     price = Column(Float)
 
+    product = relationship('Product')
+
     def __init__(self, order_id, product_id, amount, price):
         self.order_id = order_id
         self.product_id = product_id

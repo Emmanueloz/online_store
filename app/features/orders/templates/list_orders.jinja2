@@ -27,7 +27,7 @@
             <td>{{ order.state }}</td>
             <td>${{ order.total }}</td>
             <td>
-                <a href="">Ver</a>
+                <a href="{{url_for('orders.all_order', id=order.id)}}">Ver detalles</a>
             </td>
         </tr>
         {% endfor %}
