@@ -13,8 +13,10 @@ const updateCountCarrito = () => {
         const { default_href } = $carritoLink.dataset;
 
         const listIds = newListOrders.map((o) => o.id);
+        const listAmount = newListOrders.map((o) => o.amount);
+        console.log(listAmount);
 
-        $carritoLink.href = `${default_href}?list=${listIds}`;
+        $carritoLink.href = `${default_href}?list=${listIds}&amount=${listAmount}`;
     }
     $carrito.innerText = newListOrders.length;
 };

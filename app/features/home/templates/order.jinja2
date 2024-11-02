@@ -6,26 +6,42 @@
 <h1>Pedidos</h1>
 
 <table>
-  <thead>
-    <tr>
-      <th>Nombre</th>
-      <th>Precio</th>
-      <th>Categoría</th>
-      <th>Acciones</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for order in orders %}
-    <tr>
-      <td>{{ order.name }}</td>
-      <td>{{ order.price }}</td>
-      <td>{{ order.category }}</td>
-      <td>
-        <button class="btn-remove-order" data-id_product="{{order.id}}">Quitar</button>
-      </td>
-    </tr>
-    {% endfor %}
-  </tbody>
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Categoría</th>
+            <th>Precio Unitario</th>
+            <th>Cantidad</th>
+            <th>Total</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for product,amount,total in orders %}
+        <tr>
+            <td>{{ product.name }}</td>
+            <td>{{ product.category }}</td>
+            <td>{{ product.price }}</td>
+            <td>{{ amount }}</td>
+            <td>{{ total }}</td>
+            <td>
+                <button class="btn-remove-order" data-id_product="{{product.id}}">Quitar</button>
+                {% if amount > 1 %}
+                <button class="btn-decrement-amount" data-id_product="{{product.id}}">-</button>
+                {% endif %}
+
+                {% if amount < product.amount %} <button class="btn-decrement-amount" data-id_product="{{product.id}}">
+                    +</button>{% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="4">Total</td>
+            <td>{{ totalOrder }}</td>
+        </tr>
+    </tfoot>
 </table>
 
 
