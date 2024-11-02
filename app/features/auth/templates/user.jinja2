@@ -23,7 +23,7 @@
     {{ form_direction.state.label }} {{ form_direction.state }}
     {{ form_direction.zip_code.label }} {{ form_direction.zip_code }}
     {{ form_direction.neighborhood.label }} {{ form_direction.neighborhood }}
-    {{ form_direction.phone.label }} {{ form_direction.phone }}
+    {{ form_direction.phone.label }} {{ form_direction.phone(maxlength=10) }}
     {{ form_direction.country.label }} {{ form_direction.country }}
     <button type="reset">Limpiar</button>
     <button type="submit">Actualizar</button>
