@@ -34,9 +34,9 @@
                         {% if order.state == 'pending' %}
                         <span class="badge text-bg-warning">Pendiente</span>
                         {% elif order.state == 'sent' %}
-                        <span class="badge text-bg-success">Enviado</span>
+                        <span class="badge text-bg-info">Enviado</span>
                         {% elif order.state == 'delivered' %}
-                        <span class="badge text-bg-info">Entregado</span>
+                        <span class="badge text-bg-success">Entregado</span>
                         {% endif %}
                     </td>
                     <td>${{ order.total }}</td>

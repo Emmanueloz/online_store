@@ -4,68 +4,112 @@
 
 
 {% block content %}
+<main class="container-fluid p-3">
 
-<form method="post">
+    <form class="col-12 col-md-8 col-lg-6  mx-auto row g-3  {{ 'was-validated' if form and form.errors }}"
+        method="post">
 
-    {% if current_user.role == Roles.ADMIN %}
-    {{ form.csrf_token }}
-    {% endif %}
-
-    <h1>Detalles del pedido</h1>
-
-    <p>Nombre del cliente: {{ order.user.username }}</p>
-    <p>Cantidad de productos: {{ order.items|length }}</p>
-    <p>Fecha de compra: {{ order.creation_date.strftime("%d/%m/%Y %H:%M") }}</p>
-    <p>
-        Fecha de entrega:
         {% if current_user.role == Roles.ADMIN %}
-        {{ form.delivery_date }}
-        {% else %}
-        {{ order.delivery_date.strftime("%d/%m/%Y") }}
+        {{ form.csrf_token }}
         {% endif %}
-    </p>
-    <p>
-        Estado:
-        {% if current_user.role == Roles.ADMIN %}
-        {{ form.state }}
-        {% elif order.state == 'pending' %}
-        <span class="badge badge-warning">Pendiente</span>
-        {% elif order.state == 'sent' %}
-        <span class="badge badge-success">Enviado</span>
-        {% elif order.state == 'delivered' %}
-        <span class="badge badge-success">Entregado</span>
-        {% endif %}
-    </p>
-    <p>Total: ${{ order.total }}</p>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Cantidad</th>
-                <th>Precio Unitario</th>
-                <th>Total</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in order.items %}
-            <tr>
-                <td>{{ item.product.name }}</td>
-                <td>{{ item.amount }}</td>
-                <td>${{ item.price }}</td>
-                <td>${{ item.amount * item.price }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    {% if current_user.role == Roles.ADMIN %}
-    <a href="{{ url_for('orders.all_orders') }}">Cancelar</a>
-    <button>Guardar cambios</button>
-    {% else %}
-    <a href="{{ url_for('orders.user_orders') }}">Regresar</a>
-    {% endif %}
-</form>
+        <h3>Detalles del pedido</h3>
+
+        <div class="row g-3 align-items-center">
+            <div class="col-auto">
+                <p class="col-form-label">Nombre del cliente:</p>
+            </div>
+            <div class="col-auto">
+                <input class="form-control-plaintext" disabled readonly value="{{ order.user.username }}" />
+            </div>
+        </div>
+        <div class="row g-3 align-items-center">
+            <div class="col-auto">
+                <p class="col-form-label">Cantidad de productos:</p>
+            </div>
+            <div class="col-auto">
+                <input class="form-control-plaintext" disabled readonly value="{{ order.items|length }}" />
+            </div>
+        </div>
+        <div class="row g-3 align-items-center">
+            <div class="col-auto">
+                <p class="col-form-label">Fecha de compra:</p>
+            </div>
+            <div class="col-auto">
+                <input class="form-control-plaintext" disabled readonly
+                    value='{{ order.creation_date.strftime("%d/%m/%Y %H:%M") }}' />
+            </div>
+        </div>
+        <div class="row g-3 align-items-center">
+            <div class="col-auto">
+                <p class="col-form-label">Fecha de entrega:</p>
+            </div>
+            <div class="col-auto">
+                {% if current_user.role == Roles.ADMIN %}
+                {{ form.delivery_date(class="form-control") }}
+                {% else %}
+                <input class="form-control-plaintext" disabled readonly
+                    value='{{ order.delivery_date.strftime("%d/%m/%Y") }}' />
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row g-3 align-items-center">
+            <div class="col-auto">
+                <p class="col-form-label"> Estado:</p>
+            </div>
+            <div class="col-auto">
+                {% if current_user.role == Roles.ADMIN %}
+                {{ form.state(class="form-control") }}
+                {% elif order.state == 'pending' %}
+                <span class="badge text-bg-warning">Pendiente</span>
+                {% elif order.state == 'sent' %}
+                <span class="badge text-bg-info">Enviado</span>
+                {% elif order.state == 'delivered' %}
+                <span class="badge text-bg-success">Entregado</span>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row g-3 align-items-center">
+            <div class="col-auto">
+                <p class="col-form-label">Total:</p>
+            </div>
+            <div class="col-auto">
+                ${{ order.total }}
+            </div>
+        </div>
 
 
-
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Cantidad</th>
+                        <th>Precio Unitario</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in order.items %}
+                    <tr>
+                        <td>{{ item.product.name and item.product.name or 'No disponible' }}</td>
+                        <td>{{ item.amount }}</td>
+                        <td>${{ item.price }}</td>
+                        <td>${{ item.amount * item.price }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div>
+            {% if current_user.role == Roles.ADMIN %}
+            <a class="btn btn-outline-dark" href="{{ url_for('orders.all_orders') }}">Volver</a>
+            <button class="btn btn-dark" type="submit">Enviar</button>
+            {% else %}
+            <a class="btn btn-outline-dark" href="{{ url_for('orders.user_order', id=order.id) }}">Volver</a>
+            {% endif %}
+        </div>
+    </form>
+</main>
 {% endblock content %}
