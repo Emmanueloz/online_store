@@ -30,7 +30,7 @@
                 <button class="btn-decrement-amount" data-id_product="{{product.id}}">-</button>
                 {% endif %}
 
-                {% if amount < product.amount %} <button class="btn-decrement-amount" data-id_product="{{product.id}}">
+                {% if amount < product.amount %} <button class="btn-increment-amount" data-id_product="{{product.id}}">
                     +</button>{% endif %}
             </td>
         </tr>
@@ -40,7 +40,11 @@
         <tr>
             <td colspan="4">Total</td>
             <td>{{ totalOrder }}</td>
+            <td>
+                <a href="">Comprar</a>
+            </td>
         </tr>
+
     </tfoot>
 </table>
 

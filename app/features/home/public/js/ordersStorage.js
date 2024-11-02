@@ -30,4 +30,42 @@ const removeOrders = (order) => {
     setListOrders(list);
 };
 
-export { getListOrders, setListOrders, addOrders, removeOrders };
+const removeAllOrders = () => {
+    setListOrders([]);
+};
+
+const incrementAmount = (order) => {
+    order = parseInt(order);
+    const list = getListOrders();
+    const orderIndex = list.findIndex((o) => o.id === order);
+
+    if (orderIndex === -1) {
+        return;
+    }
+
+    list[orderIndex].amount++;
+    setListOrders(list);
+};
+
+const decrementAmount = (order) => {
+    order = parseInt(order);
+    const list = getListOrders();
+    const orderIndex = list.findIndex((o) => o.id === order);
+
+    if ((orderIndex === -1, list[orderIndex].amount === 1)) {
+        return;
+    }
+
+    list[orderIndex].amount--;
+    setListOrders(list);
+};
+
+export {
+    getListOrders,
+    setListOrders,
+    addOrders,
+    removeOrders,
+    incrementAmount,
+    decrementAmount,
+    removeAllOrders,
+};

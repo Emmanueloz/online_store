@@ -1,14 +1,39 @@
-import { addOrders, getListOrders, removeOrders } from "./ordersStorage.js";
+import {
+    getListOrders,
+    removeOrders,
+    decrementAmount,
+    incrementAmount,
+} from "./ordersStorage.js";
 
-const $ = (s) => document.querySelector(s);
 const $$ = (s) => document.querySelectorAll(s);
+
+const updatePage = () => {
+    const listOrders = getListOrders();
+    const listIds = listOrders.map((o) => o.id);
+    const listAmount = listOrders.map((o) => o.amount);
+    window.location.href = `${window.location.pathname}?list=${listIds}&amount=${listAmount}`;
+};
 
 $$(".btn-remove-order").forEach(($btn) => {
     $btn.addEventListener("click", (event) => {
         const { id_product } = $btn.dataset;
         removeOrders(id_product);
-        const listOrders = getListOrders();
-        console.log(`${window.location.pathname}?list=${listOrders}`);
-        window.location.href = `${window.location.pathname}?list=${listOrders}`;
+        updatePage();
+    });
+});
+
+$$(".btn-increment-amount").forEach(($btn) => {
+    $btn.addEventListener("click", (event) => {
+        const { id_product } = $btn.dataset;
+        incrementAmount(id_product);
+        updatePage();
+    });
+});
+
+$$(".btn-decrement-amount").forEach(($btn) => {
+    $btn.addEventListener("click", (event) => {
+        const { id_product } = $btn.dataset;
+        decrementAmount(id_product);
+        updatePage();
     });
 });
