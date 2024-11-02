@@ -3,29 +3,75 @@
 {% block title %}Usuario{% endblock %}
 
 {% block content %}
-<h2>Usuario</h2>
-<form method="post">
-    {{ form_user.csrf_token }}
-    {{ form_user.username.label }} {{ form_user.username }}
-    {{ form_user.email.label }} {{ form_user.email }}
-    {{ form_user.password.label }} {{ form_user.password }}
-    {{ form_user.confirm_password.label }} {{ form_user.confirm_password }}
-    <button type="reset">Limpiar</button>
-    <button type="submit">Actualizar</button>
-</form>
+<main class="container-fluid p-3 pt-5 d-flex flex-column flex-md-row justify-content-center gap-3">
+    <div class="col-12 col-md-6 col-lg-4 ">
+        <h2>Usuario</h2>
+        <form class="row g-3" method="post">
+            {{ form_user.csrf_token }}
+            <div class="mb-3">
+                {{ form_user.username.label(class="form-label") }}
+                {{ form_user.username(class="form-control") }}
+            </div>
+            <div class="mb-3">
+                {{ form_user.email.label(class="form-label") }}
+                {{ form_user.email(class="form-control") }}
+            </div>
+            <div class="mb-3">
+                {{ form_user.password.label(class="form-label") }}
+                {{ form_user.password(class="form-control") }}
+            </div>
+            <div class="mb-3">
+                {{ form_user.confirm_password.label(class="form-label") }}
+                {{ form_user.confirm_password(class="form-control") }}
+            </div>
+            <div>
+                <button class="btn btn-outline-dark" type="reset">Limpiar</button>
+                <button class="btn btn-dark" type="submit">Actualizar</button>
+            </div>
+        </form>
+    </div>
 
-<h2>Dirección</h2>
-<form method="post">
-    {{ form_direction.csrf_token }}
-    {{ form_direction.street.label }} {{ form_direction.street }}
-    {{ form_direction.number.label }} {{ form_direction.number }}
-    {{ form_direction.city.label }} {{ form_direction.city }}
-    {{ form_direction.state.label }} {{ form_direction.state }}
-    {{ form_direction.zip_code.label }} {{ form_direction.zip_code }}
-    {{ form_direction.neighborhood.label }} {{ form_direction.neighborhood }}
-    {{ form_direction.phone.label }} {{ form_direction.phone(maxlength=10) }}
-    {{ form_direction.country.label }} {{ form_direction.country }}
-    <button type="reset">Limpiar</button>
-    <button type="submit">Actualizar</button>
-</form>
+    <div class="col-12 col-md-6 col-lg-4">
+        <h2>Dirección</h2>
+        <form class="row g-3" method="post">
+            {{ form_direction.csrf_token }}
+            <div class="mb-3 col-md-9">
+                {{ form_direction.street.label(class="form-label") }}
+                {{ form_direction.street(class="form-control") }}
+            </div>
+            <div class="mb-3 col-md-3">
+                {{ form_direction.number.label(class="form-label") }}
+                {{ form_direction.number(class="form-control") }}
+            </div>
+            <div class="mb-3 col-md-6">
+                {{ form_direction.neighborhood.label(class="form-label") }}
+                {{ form_direction.neighborhood(class="form-control") }}
+            </div>
+            <div class="mb-3 col-md-6">
+                {{ form_direction.city.label(class="form-label") }}
+                {{ form_direction.city(class="form-control") }}
+            </div>
+            <div class="mb-3 col-md-7">
+                {{ form_direction.state.label(class="form-label") }}
+                {{ form_direction.state(class="form-control") }}
+            </div>
+            <div class="mb-3 col-md-5">
+                {{ form_direction.country.label(class="form-label") }}
+                {{ form_direction.country(class="form-control") }}
+            </div>
+            <div class="mb-3 col-md-8">
+                {{ form_direction.phone.label(class="form-label") }}
+                {{ form_direction.phone(maxlength=10,class="form-control") }}
+            </div>
+            <div class="mb-3 col-md-4">
+                {{ form_direction.zip_code.label(class="form-label") }}
+                {{ form_direction.zip_code(class="form-control") }}
+            </div>
+            <div>
+                <button class="btn btn-outline-dark" type="reset">Limpiar</button>
+                <button class="btn btn-dark" type="submit">Actualizar</button>
+            </div>
+        </form>
+    </div>
+</main>
 {% endblock content %}
