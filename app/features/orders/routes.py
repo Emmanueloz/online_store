@@ -88,3 +88,14 @@ def payment():
         'total_order': total_order,
     }
     return render_template('payment.jinja2', **context)
+
+
+@orders_bp.get('/all/')
+@role_authenticate([Roles.ADMIN])
+def all_orders():
+    orders = Order.query.all()
+    context = {
+        'orders': orders
+    }
+
+    return render_template('list_orders.jinja2', **context)

@@ -1,6 +1,7 @@
 from app.database import db
 from app.database.model import BaseModel
 from sqlalchemy import Column, Integer, Float, String, ForeignKey, DateTime
+from sqlalchemy.orm import relationship
 from datetime import datetime, timedelta
 
 
@@ -12,6 +13,9 @@ class Order(BaseModel):
     creation_date = Column(DateTime)
     delivery_date = Column(DateTime)
     total = Column(Float)
+
+    user = relationship('User')
+    items = relationship('OrderItem')
 
     def __init__(self, user_id, state, total):
         self.user_id = user_id

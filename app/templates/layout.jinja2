@@ -2,50 +2,51 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>
-    {% block title %}
-    Online Store
-    {% endblock title %}
-  </title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {% block title %}
+        Online Store
+        {% endblock title %}
+    </title>
 
 </head>
 
 <body>
-  <header>
-    <nav>
-      <ul>
-        <li><a href="{{ url_for('home.index') }}">Inicio</a></li>
-        <li><a href="{{ url_for('home.product_category', path='electrónicos') }}">Electrónicos</a></li>
-        <li><a href="{{ url_for('home.product_category', path='ropa') }}">Ropa</a></li>
-        <li><a href="{{ url_for('home.product_category', path='comida') }}">Comida</a></li>
-        <li><a href="{{ url_for('home.product_category', path='juguetes') }}">Juguetes</a></li>
-        <li><a href="{{ url_for('home.product_category', path='deportes') }}">Deportes</a></li>
-        <li><a href="{{ url_for('home.product_category', path='libros') }}">Libros</a></li>
-        <li><a href="{{ url_for('home.product_category', path='música') }}">Música</a></li>
-        <li><a href="{{ url_for('home.product_category', path='computadoras') }}">Computadoras</a></li>
-        <li><a href="{{ url_for('home.product_category', path='videojuego') }}">Videojuego</a></li>
-        <li><a href="{{ url_for('home.product_category', path='otros') }}">Otros</a></li>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('home.index') }}">Inicio</a></li>
+                <li><a href="{{ url_for('home.product_category', path='electrónicos') }}">Electrónicos</a></li>
+                <li><a href="{{ url_for('home.product_category', path='ropa') }}">Ropa</a></li>
+                <li><a href="{{ url_for('home.product_category', path='comida') }}">Comida</a></li>
+                <li><a href="{{ url_for('home.product_category', path='juguetes') }}">Juguetes</a></li>
+                <li><a href="{{ url_for('home.product_category', path='deportes') }}">Deportes</a></li>
+                <li><a href="{{ url_for('home.product_category', path='libros') }}">Libros</a></li>
+                <li><a href="{{ url_for('home.product_category', path='música') }}">Música</a></li>
+                <li><a href="{{ url_for('home.product_category', path='computadoras') }}">Computadoras</a></li>
+                <li><a href="{{ url_for('home.product_category', path='videojuego') }}">Videojuego</a></li>
+                <li><a href="{{ url_for('home.product_category', path='otros') }}">Otros</a></li>
 
-        {% if current_user.is_authenticated %}
-        {% if current_user.role == Roles.ADMIN %}
-        <li><a href="{{ url_for('products.index') }}">Productos</a></li>
-        {% endif %}
-        <li>
-          <span>Usuario: {{ current_user.username }}</span>
-        </li>
+                {% if current_user.is_authenticated %}
+                {% if current_user.role == Roles.ADMIN %}
+                <li><a href="{{ url_for('products.index') }}">Productos</a></li>
+                <li><a href="{{ url_for('orders.all_orders') }}">Todos los pedidos</a></li>
+                {% endif %}
+                <li>
+                    <span>Usuario: {{ current_user.username }}</span>
+                </li>
 
-        <li><a href="{{ url_for('auth.logout') }}">Cerrar Sesión</a></li>
-        {% else %}
-        <li><a href="{{ url_for('auth.login') }}">Iniciar Sesión</a></li>
-        <li><a href="{{ url_for('auth.register') }}">Registro</a></li>
-        {% endif %}
-      </ul>
-    </nav>
-  </header>
-  {% block content %}
-  {% endblock content %}
+                <li><a href="{{ url_for('auth.logout') }}">Cerrar Sesión</a></li>
+                {% else %}
+                <li><a href="{{ url_for('auth.login') }}">Iniciar Sesión</a></li>
+                <li><a href="{{ url_for('auth.register') }}">Registro</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+    {% block content %}
+    {% endblock content %}
 
 </body>
 {% block scripts %}

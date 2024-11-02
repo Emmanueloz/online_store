@@ -1,0 +1,37 @@
+{% extends "layout.jinja2" %}
+
+{% block title %}Lista de pedidos{% endblock %}
+
+{% block content %}
+<h1>Lista de pedidos</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Nombre del cliente</th>
+            <th>Cantidad de productos</th>
+            <th>Fecha de compra</th>
+            <th>Fecha de entrega</th>
+            <th>Estado</th>
+            <th>Total</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for order in orders %}
+        <tr>
+            <td>{{ order.user.username }}</td>
+            <td>{{ order.items|length }}</td>
+            <td>{{ order.creation_date.strftime("%d/%m/%Y %H:%M") }}</td>
+            <td>{{ order.delivery_date.strftime("%d/%m/%Y") }}</td>
+            <td>{{ order.state }}</td>
+            <td>${{ order.total }}</td>
+            <td>
+                <a href="">Ver</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock content %}
