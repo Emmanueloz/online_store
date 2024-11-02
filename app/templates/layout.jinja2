@@ -12,45 +12,148 @@
 
 </head>
 
+
 <body>
     <header>
-        <nav>
-            <ul>
-                <li><a href="{{ url_for('home.index') }}">Inicio</a></li>
-                <li><a href="{{ url_for('home.product_category', path='electrónicos') }}">Electrónicos</a></li>
-                <li><a href="{{ url_for('home.product_category', path='ropa') }}">Ropa</a></li>
-                <li><a href="{{ url_for('home.product_category', path='comida') }}">Comida</a></li>
-                <li><a href="{{ url_for('home.product_category', path='juguetes') }}">Juguetes</a></li>
-                <li><a href="{{ url_for('home.product_category', path='deportes') }}">Deportes</a></li>
-                <li><a href="{{ url_for('home.product_category', path='libros') }}">Libros</a></li>
-                <li><a href="{{ url_for('home.product_category', path='música') }}">Música</a></li>
-                <li><a href="{{ url_for('home.product_category', path='computadoras') }}">Computadoras</a></li>
-                <li><a href="{{ url_for('home.product_category', path='videojuego') }}">Videojuego</a></li>
-                <li><a href="{{ url_for('home.product_category', path='otros') }}">Otros</a></li>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid ">
+                <a class="navbar-brand" href="{{ url_for('home.index') }}">Tienda Online</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+                    <ul class="navbar-nav mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a href="{{ url_for('home.index') }}"
+                                class="nav-link {% if request.path == url_for('home.index') %}active{% endif %}">
+                                Todos
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ url_for('home.product_category', path='electrónicos') }}"
+                                class="nav-link {% if request.path == '/category/electrónicos/' %}active{% endif %}">
+                                Electrónicos
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.path == '/category/ropa/' %}active{% endif %}"
+                                href="{{ url_for('home.product_category', path='ropa') }}">Ropa</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.path == '/category/comida/' %}active{% endif %}"
+                                href="{{ url_for('home.product_category', path='comida') }}">
+                                Comida
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.path == '/category/juguetes/' %}active{% endif %}"
+                                href="{{ url_for('home.product_category', path='juguetes') }}">
+                                Juguetes
+                            </a>
+                        </li>
 
-                {% if current_user.is_authenticated %}
-                {% if current_user.role == Roles.ADMIN %}
-                <li><a href="{{ url_for('products.index') }}">Productos</a></li>
-                <li><a href="{{ url_for('orders.all_orders') }}">Todos los pedidos</a></li>
-                {% endif %}
-                <li>
-                    <a href="{{ url_for('auth.get_user') }}">Usuario: {{ current_user.username }}</a>
-                </li>
-                <li><a href="{{ url_for('orders.user_orders') }}">Mis pedidos</a></li>
-                <li><a href="{{ url_for('auth.logout') }}">Cerrar Sesión</a></li>
-                {% else %}
-                <li><a href="{{ url_for('auth.login') }}">Iniciar Sesión</a></li>
-                <li><a href="{{ url_for('auth.register') }}">Registro</a></li>
-                {% endif %}
-            </ul>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.path == '/category/deportes/' %}active{% endif %}"
+                                href="{{ url_for('home.product_category', path='deportes') }}">
+                                Deportes
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.path == '/category/libros/' %}active{% endif %}"
+                                href="{{ url_for('home.product_category', path='libros') }}">
+                                Libros
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.path == '/category/música/' %}active{% endif %}"
+                                href="{{ url_for('home.product_category', path='música') }}">
+                                Música
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.path == '/category/computadoras/' %}active{% endif %}"
+                                href="{{ url_for('home.product_category', path='computadoras') }}">
+                                Computadoras
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.path == '/category/videojuego/' %}active{% endif %}"
+                                href="{{ url_for('home.product_category', path='videojuego') }}">
+                                Videojuego
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.path == '/category/otros/' %}active{% endif %}"
+                                href="{{ url_for('home.product_category', path='otros') }}">
+                                Otros
+                            </a>
+                        </li>
+
+                        {% if current_user.is_authenticated %}
+                        {% if current_user.role == Roles.ADMIN %}
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.path.startswith('/products/') %}active{% endif %}"
+                                href="{{ url_for('products.index') }}">
+                                Productos
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.path.startswith('/orders/all/') %}active{% endif %}"
+                                href="{{ url_for('orders.all_orders') }}">
+                                Todos los pedidos
+                            </a>
+
+                        </li>
+                        {% endif %}
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle
+                            {% if request.path == '/user/' or request.path == '/orders/user/'%}active{% endif %}"
+                                href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Usuario: {{current_user.username }}
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{{ url_for('auth.get_user') }}">Datos</a></li>
+                                <li><a class="dropdown-item" href="{{ url_for('orders.user_orders') }}">Mis pedidos</a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li>
+                                    <a class="dropdown-item text-danger" href="{{ url_for('auth.logout') }}">
+                                        Cerrar Sesión
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+
+                        {% else %}
+                        <li class="nav-item align-self-center">
+                            <div class="btn-group">
+                                <a class="btn btn-sm btn-outline-primary" href="{{ url_for('auth.login') }}">Iniciar
+                                    Sesión</a>
+                                <a class="btn btn-sm btn-outline-primary"
+                                    href="{{ url_for('auth.register') }}">Registro</a>
+                            </div>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
         </nav>
     </header>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+
     {% block content %}
     {% endblock content %}
 
 </body>
 {% block scripts %}
-
+<script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static', filename='bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 {% endblock scripts %}
 
 </html>
