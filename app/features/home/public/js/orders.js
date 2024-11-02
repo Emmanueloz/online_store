@@ -12,7 +12,9 @@ const updateCountCarrito = () => {
     if ($carritoLink) {
         const { default_href } = $carritoLink.dataset;
 
-        $carritoLink.href = `${default_href}?list=${newListOrders}`;
+        const listIds = newListOrders.map((o) => o.id);
+
+        $carritoLink.href = `${default_href}?list=${listIds}`;
     }
     $carrito.innerText = newListOrders.length;
 };
@@ -40,7 +42,10 @@ const selectProduct = (event) => {
 $$(".btn-select-product").forEach(($btn) => {
     const { id_product } = $btn.dataset;
 
-    if (listOrders.includes(id_product)) {
+    const listIds = listOrders.map((o) => o.id);
+    console.log(listIds);
+
+    if (listIds.includes(parseInt(id_product))) {
         $btn.innerText = "Quitar del carrito";
         $btn.dataset.mode = "remove";
     } else {

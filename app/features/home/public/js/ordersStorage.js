@@ -14,16 +14,19 @@ const getListOrders = () => {
     return listOrders;
 };
 
-const addOrders = (order) => {
+const addOrders = (order, amount = 1) => {
     const list = getListOrders();
-    list.push(order);
+
+    list.push({
+        id: parseInt(order),
+        amount: amount,
+    });
     setListOrders(list);
 };
 
 const removeOrders = (order) => {
-    const list = getListOrders();
-    const index = list.indexOf(order);
-    list.splice(index, 1);
+    order = parseInt(order);
+    const list = getListOrders().filter((o) => o.id !== order);
     setListOrders(list);
 };
 
