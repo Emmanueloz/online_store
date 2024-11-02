@@ -3,8 +3,10 @@ import {
     removeOrders,
     decrementAmount,
     incrementAmount,
+    removeAllOrders,
 } from "../../../../static/js/ordersStorage.js";
 
+const $ = (s) => document.querySelector(s);
 const $$ = (s) => document.querySelectorAll(s);
 
 const updatePage = () => {
@@ -36,4 +38,11 @@ $$(".btn-decrement-amount").forEach(($btn) => {
         decrementAmount(id_product);
         updatePage();
     });
+});
+
+$(`#pay-link`).addEventListener("click", (event) => {
+    event.preventDefault();
+
+    removeAllOrders();
+    window.location.href = event.target.href;
 });

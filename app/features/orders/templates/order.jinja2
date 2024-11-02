@@ -41,7 +41,7 @@
             <td colspan="4">Total</td>
             <td>{{ totalOrder }}</td>
             <td>
-                <a href="{{ url_for('orders.payment', list=listOrders, amount=listAmount) }}">Comprar</a>
+                <a id="pay-link" href="{{ url_for('orders.payment', list=listOrders, amount=listAmount) }}">Comprar</a>
             </td>
         </tr>
 
