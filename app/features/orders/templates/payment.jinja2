@@ -3,6 +3,15 @@
 {% block title %}Pago{% endblock %}
 
 {% block content %}
-<h1>Pago</h1>
-<p>Se ha realizado el pago con éxito</p>
+<h1>Pedido con éxito</h1>
+<p>Se ha realizado el pedido con éxito</p>
+
+<p>El pago fue de ${{ total_order }} </p>
+
+<p>Lista de pedidos</p>
+
+{% for product,amount,total in list_orders %}
+<p>{{ product.name }} - {{ amount }} - {{ total }}</p>
+{% endfor %}
+
 {% endblock content %}

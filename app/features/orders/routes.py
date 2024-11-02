@@ -1,8 +1,9 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request
-from app.auth.role_authenticate import role_authenticate
+from app.auth.role_authenticate import role_authenticate, current_user
 from app.auth.roles import Roles
 from app.features.products.model import Product
-
+from app.features.orders.model import Order, OrderItem
+from app.database import db
 
 orders_bp = Blueprint('orders', __name__,
                       template_folder='templates', url_prefix='/orders/', static_folder='public')
@@ -37,7 +38,9 @@ def index():
 
     context = {
         'orders': listOrders,
-        "totalOrder": totalOrder,
+        'listOrders': list,
+        'listAmount': listAmount,
+        'totalOrder': totalOrder,
     }
 
     return render_template('order.jinja2', **context)
@@ -46,5 +49,42 @@ def index():
 @orders_bp.get('/payment/')
 @role_authenticate([Roles.CLIENTE, Roles.ADMIN])
 def payment():
+    try:
+        list_ids = request.args.getlist("list")
+        list_amount = request.args.getlist("amount")
 
-    return render_template('payment.jinja2')
+        list_ids = [int(i) for i in list_ids]
+        list_amount = [int(i) for i in list_amount]
+
+        list_products: list[Product] = Product.query.filter(
+            Product.id.in_(list_ids)).all()
+
+        list_unit_total = []
+        for product, amount in zip(list_products, list_amount):
+            list_unit_total.append(product.price * amount)
+            product.amount -= amount
+        db.session.commit()
+
+        total_order = sum(list_unit_total)
+
+        order: Order = Order(current_user.id, 'pending', total_order)
+        db.session.add(order)
+        db.session.commit()
+
+        for product, amount in zip(list_products, list_amount):
+            order_item = OrderItem(order.id, product.id, amount, product.price)
+            db.session.add(order_item)
+            db.session.commit()
+
+    except Exception as e:
+        print(e)
+        flash("Error al procesar los pedidos", 'error')
+        return redirect(url_for('home.index'))
+
+    list_orders = zip(list_products, list_amount, list_unit_total)
+
+    context = {
+        'list_orders': list_orders,
+        'total_order': total_order,
+    }
+    return render_template('payment.jinja2', **context)
