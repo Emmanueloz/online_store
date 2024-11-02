@@ -4,7 +4,14 @@
 
 {% block content %}
 <h1>Bienvenido a la página de inicio</h1>
-<p>Contenido específico de inicio.</p>
+
+<div>
+  <a href="">
+    <span>Carrito</span>
+    <span>🛒</span>
+    <span id="carrito-count">0</span>
+  </a>
+</div>
 
 <h2>
   Productos
@@ -24,6 +31,7 @@
     <p>Precio: {{ product.price }}</p>
     <p>Cantidad: {{ product.amount }}</p>
     <p>Categoría: {{ product.category }}</p>
+    <button class="btn-select-product" data-mode="add" data-id_product="{{product.id}}">Agregar al carrio</button>
   </article>
 
   {% endfor %}
@@ -33,4 +41,12 @@
 <p>No hay productos disponibles.</p>
 {% endif %}
 
-{% endblock %}
+
+{% endblock content %}
+
+{% block scripts %}
+{{ super() }}
+
+<script type="module" src="{{ url_for('home.static', filename='js/orders.js') }}"></script>
+
+{% endblock scripts %}

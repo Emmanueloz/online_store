@@ -3,7 +3,9 @@ from app.auth.role_authenticate import role_authenticate
 from app.auth.roles import Roles
 from app.features.products.model import Product
 
-home_bp = Blueprint('home', __name__, template_folder='templates')
+home_bp = Blueprint(
+    'home', __name__, template_folder='templates', static_folder='public'
+)
 
 
 @home_bp.get('/')
