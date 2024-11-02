@@ -7,27 +7,27 @@
 
 <div>
 
-  {% if current_user.is_authenticated %}
-  <a id="carrito-link" href="{{ url_for('home.orders') }}" data-default_href="{{ url_for('home.orders') }}">
-    <span>Carrito</span>
-    <span>🛒</span>
-    <span id="carrito-count">0</span>
-  </a>
-  {% else %}
-  <a href="{{ url_for('auth.login') }}">
-    <span>Iniciar Sesión</span>
-    <span>🛒</span>
-    <span id="carrito-count">0</span>
-  </a>
-  {% endif %}
+    {% if current_user.is_authenticated %}
+    <a id="carrito-link" href="{{ url_for('orders.index') }}" data-default_href="{{ url_for('orders.index') }}">
+        <span>Carrito</span>
+        <span>🛒</span>
+        <span id="carrito-count">0</span>
+    </a>
+    {% else %}
+    <a href="{{ url_for('auth.login') }}">
+        <span>Iniciar Sesión</span>
+        <span>🛒</span>
+        <span id="carrito-count">0</span>
+    </a>
+    {% endif %}
 
 </div>
 
 <h2>
-  Productos
-  {% if category %}
-  de {{ category }}
-  {% endif %}
+    Productos
+    {% if category %}
+    de {{ category }}
+    {% endif %}
 </h2>
 
 {% if products %}
@@ -35,16 +35,16 @@
 <section>
 
 
-  {% for product in products %}
-  <article>
-    <h3>{{ product.name }}</h3>
-    <p>Precio: {{ product.price }}</p>
-    <p>Cantidad: {{ product.amount }}</p>
-    <p>Categoría: {{ product.category }}</p>
-    <button class="btn-select-product" data-mode="add" data-id_product="{{product.id}}">Agregar al carrio</button>
-  </article>
+    {% for product in products %}
+    <article>
+        <h3>{{ product.name }}</h3>
+        <p>Precio: {{ product.price }}</p>
+        <p>Cantidad: {{ product.amount }}</p>
+        <p>Categoría: {{ product.category }}</p>
+        <button class="btn-select-product" data-mode="add" data-id_product="{{product.id}}">Agregar al carrio</button>
+    </article>
 
-  {% endfor %}
+    {% endfor %}
 
 </section>
 {% else %}

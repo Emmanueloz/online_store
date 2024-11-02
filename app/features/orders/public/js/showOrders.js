@@ -3,7 +3,7 @@ import {
     removeOrders,
     decrementAmount,
     incrementAmount,
-} from "./ordersStorage.js";
+} from "../../../../static/js/ordersStorage.js";
 
 const $$ = (s) => document.querySelectorAll(s);
 

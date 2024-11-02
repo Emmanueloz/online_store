@@ -20,6 +20,8 @@ def create_app():
     app.register_blueprint(auth_bp)
     from app.features.products import products_bp
     app.register_blueprint(products_bp)
+    from app.features.orders import orders_bp
+    app.register_blueprint(orders_bp)
 
     with app.app_context() as ctx:
         db.create_all()

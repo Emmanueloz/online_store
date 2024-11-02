@@ -1,4 +1,8 @@
-import { addOrders, getListOrders, removeOrders } from "./ordersStorage.js";
+import {
+    addOrders,
+    getListOrders,
+    removeOrders,
+} from "../../../../static/js/ordersStorage.js";
 
 const $ = (s) => document.querySelector(s);
 const $$ = (s) => document.querySelectorAll(s);
