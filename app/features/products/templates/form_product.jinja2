@@ -3,20 +3,34 @@
 {% block title %}Crear Producto{% endblock %}
 
 {% block content %}
-<form method="post">
-  {{ form.csrf_token }}
-  {{form.name.label}}
-  {{form.name}}
-  {{form.description.label}}
-  {# la descripción es un textarea #}
-  {{form.description()}}
-  {{form.price.label}}
-  {{form.price(min=0.00)}}
-  {{form.amount.label}}
-  {{form.amount(min=0)}}
-  {{form.category.label}}
-  {{form.category}}
-  <input type="submit" value="Crear">
-
-</form>
+<main class="container-fluid p-3">
+    <form class="col-12 col-md-8 col-lg-6  mx-auto row g-3  {{ 'was-validated' if form.errors }}" method="post">
+        <h3>Crear Producto</h3>
+        {{ form.csrf_token }}
+        <div class="mb-3">
+            {{ form.name.label(class="form-label") }}
+            {{ form.name(class="form-control") }}
+        </div>
+        <div class="mb-3">
+            {{ form.description.label(class="form-label") }}
+            {{ form.description(class="form-control") }}
+        </div>
+        <div class="mb-3">
+            {{ form.price.label(class="form-label") }}
+            {{ form.price(class="form-control",price=0.00) }}
+        </div>
+        <div class="mb-3 col-md-6">
+            {{ form.amount.label(class="form-label") }}
+            {{ form.amount(class="form-control",min=0) }}
+        </div>
+        <div class="mb-3 col-md-6">
+            {{ form.category.label(class="form-label") }}
+            {{ form.category(class="form-control") }}
+        </div>
+        <div>
+            <button class="btn btn-outline-dark" type="reset">Limpiar</button>
+            <button class="btn btn-dark" type="submit">Crear</button>
+        </div>
+    </form>
+</main>
 {% endblock content %}
