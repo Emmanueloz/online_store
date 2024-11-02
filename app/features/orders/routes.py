@@ -43,14 +43,6 @@ def index():
     return render_template('order.jinja2', **context)
 
 
-@orders_bp.get('/my-orders/')
-def my_orders():
-    context = {
-        "orders": []
-    }
-    return render_template('index_orders.jinja2', **context)
-
-
 @orders_bp.get('/payment/')
 @role_authenticate([Roles.CLIENTE, Roles.ADMIN])
 def payment():
