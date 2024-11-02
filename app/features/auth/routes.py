@@ -56,8 +56,20 @@ def register_post():
 
     try:
         password_hash = generate_password_hash(form.password.data)
-        user = User(form.username.data, form.email.data, password_hash,
-                    Roles.CLIENTE)
+        user = User(
+            form.username.data,
+            form.email.data,
+            password_hash,
+            Roles.CLIENTE,
+            form.street.data,
+            form.number.data,
+            form.city.data,
+            form.state.data,
+            form.zip_code.data,
+            form.country.data,
+            form.neighborhood.data,
+            form.phone.data
+        )
         db.session.add(user)
         db.session.commit()
         login_user(UserLogin(user.id, user.username,

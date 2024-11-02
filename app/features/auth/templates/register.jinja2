@@ -5,11 +5,19 @@
 {% block content %}
 
 <form method="post">
-  {{ form.csrf_token }}
-  {{ form.username.label }} {{ form.username }}
-  {{ form.email.label }} {{ form.email }}
-  {{ form.password.label }} {{ form.password }}
-  {{ form.confirm_password.label }} {{ form.confirm_password }}
-  <button type="submit">Registrar</button>
+    {{ form.csrf_token }}
+    {{ form.username.label }} {{ form.username }}
+    {{ form.email.label }} {{ form.email }}
+    {{ form.password.label }} {{ form.password }}
+    {{ form.confirm_password.label }} {{ form.confirm_password }}
+    {{ form.street.label }} {{ form.street }}
+    {{ form.number.label }} {{ form.number }}
+    {{ form.city.label }} {{ form.city }}
+    {{ form.state.label }} {{ form.state }}
+    {{ form.country.label }} {{ form.country }}
+    {{ form.zip_code.label }} {{ form.zip_code }}
+    {{ form.neighborhood.label }} {{ form.neighborhood }}
+    {{ form.phone.label }} {{ form.phone }}
+    <button type="submit">Registrar</button>
 </form>
 {% endblock %}
