@@ -1,0 +1,34 @@
+{% extends "layout.jinja2" %}
+
+{% block title %}Página de Pedidos{% endblock %}
+
+{% block content %}
+<h1>Pedidos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Precio</th>
+      <th>Cantidad</th>
+      <th>Categoría</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for order in orders %}
+    <tr>
+      <td>{{ order.name }}</td>
+      <td>{{ order.price }}</td>
+      <td>{{ order.amount }}</td>
+      <td>{{ order.category }}</td>
+      <td>
+        <a href="">Quitar</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+
+{% endblock content %}

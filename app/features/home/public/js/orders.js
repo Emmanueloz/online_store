@@ -4,10 +4,15 @@ const $ = (s) => document.querySelector(s);
 const $$ = (s) => document.querySelectorAll(s);
 
 const $carrito = $("#carrito-count");
+const $carritoLink = $("#carrito-link");
 const listOrders = getListOrders();
 
 const updateCountCarrito = () => {
-    $carrito.innerText = getListOrders().length;
+    const newListOrders = getListOrders();
+    if ($carritoLink) {
+        $carritoLink.href = `${$carritoLink.href}?list=${newListOrders}`;
+    }
+    $carrito.innerText = newListOrders.length;
 };
 
 /**
