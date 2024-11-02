@@ -26,6 +26,28 @@ const updateCountCarrito = () => {
 };
 
 /**
+ *
+ * @param {HTMLButtonElement} $btn
+ */
+const setBtnAdd = ($btn) => {
+    $btn.innerText = "Agregar al carrito";
+    $btn.dataset.mode = "add";
+    $btn.classList.add("btn-dark");
+    $btn.classList.remove("btn-outline-danger");
+};
+
+/**
+ *
+ * @param {HTMLButtonElement} $btn
+ */
+const setBtnRemove = ($btn) => {
+    $btn.innerText = "Quitar del carrito";
+    $btn.dataset.mode = "remove";
+    $btn.classList.add("btn-outline-danger");
+    $btn.classList.remove("btn-dark");
+};
+
+/**
  * @param {Event} event
  */
 const selectProduct = (event) => {
@@ -34,12 +56,10 @@ const selectProduct = (event) => {
 
     if (mode === "add") {
         addOrders(id_product);
-        $btn.innerText = "Quitar del carrito";
-        $btn.dataset.mode = "remove";
+        setBtnRemove($btn);
     } else if (mode === "remove") {
         removeOrders(id_product);
-        $btn.innerText = "Agregar al carrito";
-        $btn.dataset.mode = "add";
+        setBtnAdd($btn);
     }
 
     updateCountCarrito();
@@ -52,11 +72,9 @@ $$(".btn-select-product").forEach(($btn) => {
     console.log(listIds);
 
     if (listIds.includes(parseInt(id_product))) {
-        $btn.innerText = "Quitar del carrito";
-        $btn.dataset.mode = "remove";
+        setBtnRemove($btn);
     } else {
-        $btn.innerText = "Agregar al carrito";
-        $btn.dataset.mode = "add";
+        setBtnAdd($btn);
     }
 
     $btn.addEventListener("click", selectProduct);
