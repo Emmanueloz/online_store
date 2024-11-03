@@ -98,7 +98,7 @@ def payment():
             'id': product.id,
             'name': product.name,
         }, 'amount': amount, 'total': unit_total}
-        for product, amount, unit_total in zip(list_products, list_amount, list_unit_total)
+        for product, amount, unit_total in list_orders
     ]
     session['total_order'] = total_order
 
@@ -133,7 +133,9 @@ def payment_result():
 def all_orders():
     orders = Order.query.all()
     context = {
-        'orders': orders
+        'orders': orders,
+        'title': 'Todos los pedidos',
+        'url_detail': 'orders.all_order',
     }
 
     return render_template('list_orders.jinja2', **context)
@@ -193,7 +195,9 @@ def all_order_post(id):
 def user_orders():
     orders = Order.query.filter(Order.user_id == current_user.id).all()
     context = {
-        'orders': orders
+        'orders': orders,
+        'title': 'Mis pedidos',
+        'url_detail': 'orders.user_order',
     }
     return render_template('list_orders.jinja2', **context)
 
@@ -201,7 +205,9 @@ def user_orders():
 @orders_bp.get('/user/<int:id>/')
 @role_authenticate([Roles.CLIENTE, Roles.ADMIN])
 def user_order(id):
-    order = Order.query.filter(Order.id == id).first()
+
+    order = Order.query.filter(
+        Order.id == id, Order.user_id == current_user.id).first()
 
     if order is None:
         flash("No se encontró el pedido", 'error')

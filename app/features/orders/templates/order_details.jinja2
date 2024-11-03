@@ -9,7 +9,7 @@
     <form class="col-12 col-md-8 col-lg-6  mx-auto row g-3  {{ 'was-validated' if form and form.errors }}"
         method="post">
 
-        {% if current_user.role == Roles.ADMIN %}
+        {% if current_user.role == Roles.ADMIN and form %}
         {{ form.csrf_token }}
         {% endif %}
 
@@ -45,8 +45,8 @@
                 <p class="col-form-label">Fecha de entrega:</p>
             </div>
             <div class="col-auto">
-                {% if current_user.role == Roles.ADMIN %}
-                {{ form.delivery_date(class="form-control") }}
+                {% if current_user.role == Roles.ADMIN and form %}
+                {{ form and form.delivery_date(class="form-control") }}
                 {% else %}
                 <input class="form-control-plaintext" disabled readonly
                     value='{{ order.delivery_date.strftime("%d/%m/%Y") }}' />
@@ -59,7 +59,7 @@
                 <p class="col-form-label"> Estado:</p>
             </div>
             <div class="col-auto">
-                {% if current_user.role == Roles.ADMIN %}
+                {% if current_user.role == Roles.ADMIN and form %}
                 {{ form.state(class="form-control") }}
                 {% elif order.state == 'pending' %}
                 <span class="badge text-bg-warning">Pendiente</span>
@@ -103,11 +103,12 @@
             </table>
         </div>
         <div>
-            {% if current_user.role == Roles.ADMIN %}
+            {% if current_user.role == Roles.ADMIN and form %}
             <a class="btn btn-outline-dark" href="{{ url_for('orders.all_orders') }}">Volver</a>
             <button class="btn btn-dark" type="submit">Enviar</button>
-            {% else %}
-            <a class="btn btn-outline-dark" href="{{ url_for('orders.user_order', id=order.id) }}">Volver</a>
+            {% elif current_user.role == Roles.ADMIN %}
+            <a class="btn btn-outline-dark" href="{{ url_for('orders.user_orders') }}">Volver</a>
+            <a href="{{ url_for('orders.all_order', id=order.id) }}" class="btn btn-outline-dark">Editar</a>
             {% endif %}
         </div>
     </form>
