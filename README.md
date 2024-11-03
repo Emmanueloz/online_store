@@ -14,25 +14,57 @@ This is a simple online store built with Python and Flask.
 
 ## Installation
 
-1. Clone the repository:
+### 1. Create a virtual environment:
 
 ```bash
-git clone https://github.com/emmanueloz/online-store.git
+python -m venv .venv
 ```
 
-2. Navigate to the project directory:
-
-```bash
-cd online-store
-```
-
-3. Install the required packages:
+### 2. Install the required packages:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-4. Run the application:
+### 3. Copy the `.env.example` file to `.env` and fill in the necessary environment variables:
+
+```bash
+cp .env.example .env
+```
+
+### 4. Configure environment variables:
+
+Generate a secret key for your application:
+
+```bash
+python -c 'import secrets; print(secrets.token_hex())'
+
+```
+
+```
+# Database SQLite
+
+SECRET_KEY=your_secret_key # paste the generated secret key
+SQLALCHEMY_DATABASE_URI=sqlite:///db.sqlite3
+SQLALCHEMY_TRACK_MODIFICATIONS=False
+
+# Change to True for development mode and False for production mode
+FLASK_DEBUG=False
+FLASK_ENV=production
+
+# User Admin
+USER_ADMIN_USERNAME=admin
+USER_ADMIN_PASSWORD=admin
+USER_ADMIN_EMAIL=admin@gmail.com
+```
+
+### 5. Initialize migrations:
+
+```bash
+flask db init
+```
+
+### 6. Run the application:
 
 ```bash
 flask run
