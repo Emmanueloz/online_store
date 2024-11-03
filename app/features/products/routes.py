@@ -24,7 +24,9 @@ def index():
 @role_authenticate([Roles.ADMIN])
 def create():
     context = {
-        'form': FormProduct()
+        'form': FormProduct(),
+        'title': 'Crear Producto',
+        'btn_text': 'Crear',
     }
     return render_template('form_product.jinja2', **context)
 
@@ -36,6 +38,8 @@ def create_product():
     form: FormProduct = FormProduct()
     context = {
         'form': form,
+        'title': 'Crear Producto',
+        'btn_text': 'Crear',
     }
 
     if not form.validate_on_submit():
@@ -74,6 +78,8 @@ def edit(id):
 
     context = {
         'form': form,
+        'title': 'Editar Producto',
+        'btn_text': 'Editar',
     }
     return render_template('form_product.jinja2', **context)
 
@@ -85,6 +91,8 @@ def edit_product(id):
     form: FormProduct = FormProduct()
     context = {
         'form': form,
+        'title': 'Editar Producto',
+        'btn_text': 'Editar',
     }
 
     if not form.validate_on_submit():

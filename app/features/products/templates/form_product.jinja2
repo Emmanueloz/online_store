@@ -1,11 +1,11 @@
 {% extends "layout.jinja2" %}
 
-{% block title %}Crear Producto{% endblock %}
+{% block title %}{{title}}{% endblock %}
 
 {% block content %}
 <main class="container-fluid p-3">
     <form class="col-12 col-md-8 col-lg-6  mx-auto row g-3  {{ 'was-validated' if form.errors }}" method="post">
-        <h3>Crear Producto</h3>
+        <h3>{{title}}</h3>
         {{ form.csrf_token }}
         <div class="mb-3">
             {{ form.name.label(class="form-label") }}
@@ -29,7 +29,7 @@
         </div>
         <div>
             <button class="btn btn-outline-dark" type="reset">Limpiar</button>
-            <button class="btn btn-dark" type="submit">Crear</button>
+            <button class="btn btn-dark" type="submit">{{btn_text}}</button>
         </div>
     </form>
 </main>

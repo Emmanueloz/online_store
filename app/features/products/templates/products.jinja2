@@ -25,7 +25,8 @@
                 {% for product in products %}
                 <tr>
                     <td>{{ product.name }}</td>
-                    <td>{{ product.description }}</td>
+                    {# Descripción reduce a 10 caracteres #}
+                    <td>{{ product.description | truncate(70) }}</td>
                     <td>{{ product.price }}</td>
                     <td>{{ product.amount }}</td>
                     <td>{{ product.category }}</td>
