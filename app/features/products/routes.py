@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, flash
+from flask import Blueprint, render_template, redirect, url_for, flash, request
 from app.auth.role_authenticate import role_authenticate
 from app.auth.roles import Roles
 from app.features.products.forms import FormProduct
@@ -12,9 +12,16 @@ products_bp = Blueprint('products', __name__, template_folder='templates')
 @products_bp.get('/products/')
 @role_authenticate([Roles.ADMIN])
 def index():
+    page = request.args.get('page', 1, type=int)
+    per_page = request.args.get('per_page', 20, type=int)
+
+    products = Product.query.paginate(
+        page=page, per_page=per_page, error_out=False)
+
+    print(products.iter_pages())
 
     context = {
-        'products': Product.query.all()
+        'pagination': products
     }
 
     return render_template('products.jinja2', **context)
