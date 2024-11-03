@@ -63,10 +63,10 @@ def payment():
         list_unit_total = []
         for product, amount in zip(list_products, list_amount):
             list_unit_total.append(product.price * amount)
-            product.amount -= amount
-        db.session.commit()
-
+            # product.amount -= amount
         total_order = sum(list_unit_total)
+
+        db.session.commit()
 
         order: Order = Order(current_user.id, 'pending', total_order)
         db.session.add(order)
@@ -76,7 +76,6 @@ def payment():
             order_item = OrderItem(order.id, product.id, amount, product.price)
             db.session.add(order_item)
             db.session.commit()
-
     except Exception as e:
         print(e)
         flash("Error al procesar los pedidos", 'error')

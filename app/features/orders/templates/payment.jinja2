@@ -3,16 +3,27 @@
 {% block title %}Pago{% endblock %}
 
 {% block content %}
-<h1>Pedido con éxito</h1>
-<p>Se ha realizado el pedido con éxito</p>
 
-<p>El pago fue de ${{ total_order }} </p>
+<main class="container p-3">
+    <h2>Pedido con éxito</h2>
+    <p class="fs-4">Se ha realizado el pedido con éxito</p>
 
-<p>Lista de pedidos</p>
+    <p class="fs-4">El pago fue de <span class="fw-bold">${{ total_order }} </span></p>
 
-{% for product,amount,total in list_orders %}
-<p>{{ product.name }} - {{ amount }} - {{ total }}</p>
-{% endfor %}
+    <a class="btn btn-outline-dark mb-3" href="{{ url_for('home.index') }}">Volver</a>
+    <p class="fs-4 fw-bold">Lista de pedidos</p>
+    <ul class="list-group">
+        {% for product,amount,total in list_orders %}
+        <li class="list-group-item">
+            Producto: {{ product.name }}
+            <br>
+            Cantidad: {{ amount }}
+            <br>
+            Total: <span class="fw-bold">${{ total }}</span>
+        </li>
+        {% endfor %}
+    </ul>
+</main>
 
 {% endblock content %}
 
