@@ -94,7 +94,10 @@ def payment():
     list_orders = zip(list_products, list_amount, list_unit_total)
 
     session['list_orders'] = [
-        {'product': product.id, 'amount': amount, 'total': unit_total}
+        {'product': {
+            'id': product.id,
+            'name': product.name,
+        }, 'amount': amount, 'total': unit_total}
         for product, amount, unit_total in zip(list_products, list_amount, list_unit_total)
     ]
     session['total_order'] = total_order
@@ -108,7 +111,12 @@ def payment_result():
     list_orders = session.get('list_orders', [])
     total_order = session.get('total_order', 0)
 
-    # Limpiar los datos de la sesión si ya no se necesitan
+    print(list_orders)
+
+    if not list_orders or not total_order:
+        flash("No se encontraron pedidos", 'error')
+        return redirect(url_for('home.index'))
+
     session.pop('list_orders', None)
     session.pop('total_order', None)
 

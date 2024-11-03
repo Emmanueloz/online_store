@@ -13,13 +13,13 @@
     <a class="btn btn-outline-dark mb-3" href="{{ url_for('home.index') }}">Volver</a>
     <p class="fs-4 fw-bold">Lista de pedidos</p>
     <ul class="list-group">
-        {% for product,amount,total in list_orders %}
+        {% for item in list_orders %}
         <li class="list-group-item">
-            Producto: {{ product.name }}
+            Producto: {{ item.product.name }}
             <br>
-            Cantidad: {{ amount }}
+            Cantidad: {{ item.amount }}
             <br>
-            Total: <span class="fw-bold">${{ total }}</span>
+            Total: <span class="fw-bold">${{ item.total }}</span>
         </li>
         {% endfor %}
     </ul>
