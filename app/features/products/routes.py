@@ -13,12 +13,12 @@ products_bp = Blueprint('products', __name__, template_folder='templates')
 @role_authenticate([Roles.ADMIN])
 def index():
     page = request.args.get('page', 1, type=int)
-    per_page = request.args.get('per_page', 20, type=int)
+    per_page = request.args.get('per_page', 15, type=int)
+
+    print(page, per_page,)
 
     products = Product.query.paginate(
         page=page, per_page=per_page, error_out=False)
-
-    print(products.iter_pages())
 
     context = {
         'pagination': products

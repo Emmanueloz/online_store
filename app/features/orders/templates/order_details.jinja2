@@ -109,6 +109,8 @@
             {% elif current_user.role == Roles.ADMIN %}
             <a class="btn btn-outline-dark" href="{{ url_for('orders.user_orders') }}">Volver</a>
             <a href="{{ url_for('orders.all_order', id=order.id) }}" class="btn btn-outline-dark">Editar</a>
+            {% else %}
+            <a class="btn btn-outline-dark" href="{{ url_for('orders.user_orders') }}">Volver</a>
             {% endif %}
         </div>
     </form>

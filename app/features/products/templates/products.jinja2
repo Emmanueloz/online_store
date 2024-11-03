@@ -3,23 +3,7 @@
 {% block title %}Página de Productos{% endblock %}
 
 {% block styles %}
-<style>
-    .pagination .page-item .page-link {
-        color: black;
-    }
-
-    .pagination .page-item.active .page-link {
-        background-color: black;
-        color: white;
-        border-color: black;
-    }
-
-    .pagination .page-item.active .page-link:hover {
-        background-color: #333;
-        color: white;
-        border-color: #333;
-    }
-</style>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/paginate.css') }}">
 {% endblock styles %}
 
 {% block content %}

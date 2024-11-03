@@ -131,11 +131,17 @@ def payment_result():
 @orders_bp.get('/all/')
 @role_authenticate([Roles.ADMIN])
 def all_orders():
-    orders = Order.query.all()
+    page = request.args.get('page', 1, type=int)
+    per_page = request.args.get('per_page', 15, type=int)
+
+    orders = Order.query.paginate(
+        page=page, per_page=per_page, error_out=False)
+
     context = {
-        'orders': orders,
+        'pagination': orders,
         'title': 'Todos los pedidos',
         'url_detail': 'orders.all_order',
+        'url_pagination': 'orders.all_orders',
     }
 
     return render_template('list_orders.jinja2', **context)
@@ -193,11 +199,16 @@ def all_order_post(id):
 @orders_bp.get('/user/')
 @role_authenticate([Roles.CLIENTE, Roles.ADMIN])
 def user_orders():
-    orders = Order.query.filter(Order.user_id == current_user.id).all()
+    page = request.args.get('page', 1, type=int)
+    per_page = request.args.get('per_page', 15, type=int)
+
+    orders = Order.query.filter(Order.user_id == current_user.id).paginate(
+        page=page, per_page=per_page, error_out=False)
     context = {
-        'orders': orders,
+        'pagination': orders,
         'title': 'Mis pedidos',
         'url_detail': 'orders.user_order',
+        'url_pagination': 'orders.user_orders',
     }
     return render_template('list_orders.jinja2', **context)
 
