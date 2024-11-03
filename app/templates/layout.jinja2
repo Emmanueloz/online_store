@@ -9,13 +9,14 @@
         Online Store
         {% endblock title %}
     </title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
 
 </head>
 
 
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <nav class="navbar navbar-expand-xxl bg-body-tertiary">
             <div class="container-fluid ">
                 <a class="navbar-brand" href="{{ url_for('home.index') }}">Tienda Online</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -145,15 +146,15 @@
             </div>
         </nav>
     </header>
-    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
 
     {% block content %}
     {% endblock content %}
 
 </body>
 {% block scripts %}
+<script src="{{ url_for('static', filename='bootstrap/js/popper.min.js') }}"></script>
 <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
-<script src="{{ url_for('static', filename='bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
 {% endblock scripts %}
 
 </html>

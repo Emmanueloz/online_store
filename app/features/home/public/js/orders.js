@@ -18,7 +18,6 @@ const updateCountCarrito = () => {
 
         const listIds = newListOrders.map((o) => o.id);
         const listAmount = newListOrders.map((o) => o.amount);
-        console.log(listAmount);
 
         $carritoLink.href = `${default_href}?list=${listIds}&amount=${listAmount}`;
     }
@@ -69,7 +68,6 @@ $$(".btn-select-product").forEach(($btn) => {
     const { id_product } = $btn.dataset;
 
     const listIds = listOrders.map((o) => o.id);
-    console.log(listIds);
 
     if (listIds.includes(parseInt(id_product))) {
         setBtnRemove($btn);
