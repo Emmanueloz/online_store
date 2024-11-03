@@ -5,6 +5,7 @@ from app.features.products.model import Product
 from app.features.orders.model import Order, OrderItem
 from app.database import db
 from app.features.orders.forms import OrderForm
+from sqlalchemy import case
 
 orders_bp = Blueprint('orders', __name__,
                       template_folder='templates', url_prefix='/orders/', static_folder='public')
@@ -22,12 +23,19 @@ def index():
             return redirect(url_for('home.index'))
 
         list = [int(i) for i in list]
+
+        print(list)
         listAmount = [int(i) for i in listAmount]
     except:
         flash("Error al procesar los pedidos", 'error')
         return redirect(url_for('home.index'))
 
-    listProducts = Product.query.filter(Product.id.in_(list)).all()
+    order_case = case(
+        {id: index for index, id in enumerate(list)}, value=Product.id)
+
+    listProducts = Product.query.filter(
+        Product.id.in_(list)).order_by(order_case).all()
+    print(listProducts)
 
     listUnitTotal = []
 
