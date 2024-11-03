@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, flash, request
+from flask import Blueprint, render_template, redirect, url_for, flash, request, session
 from app.auth.role_authenticate import role_authenticate, current_user
 from app.auth.roles import Roles
 from app.features.products.model import Product
@@ -93,10 +93,30 @@ def payment():
 
     list_orders = zip(list_products, list_amount, list_unit_total)
 
+    session['list_orders'] = [
+        {'product': product.id, 'amount': amount, 'total': unit_total}
+        for product, amount, unit_total in zip(list_products, list_amount, list_unit_total)
+    ]
+    session['total_order'] = total_order
+
+    return redirect(url_for('orders.payment_result'))
+
+
+@orders_bp.get('/payment/success/')
+@role_authenticate([Roles.CLIENTE, Roles.ADMIN])
+def payment_result():
+    list_orders = session.get('list_orders', [])
+    total_order = session.get('total_order', 0)
+
+    # Limpiar los datos de la sesión si ya no se necesitan
+    session.pop('list_orders', None)
+    session.pop('total_order', None)
+
     context = {
         'list_orders': list_orders,
         'total_order': total_order,
     }
+
     return render_template('payment.jinja2', **context)
 
 
