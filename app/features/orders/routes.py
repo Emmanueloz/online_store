@@ -35,7 +35,6 @@ def index():
 
     listProducts = Product.query.filter(
         Product.id.in_(list)).order_by(order_case).all()
-    print(listProducts)
 
     listUnitTotal = []
 
@@ -65,13 +64,16 @@ def payment():
         list_ids = [int(i) for i in list_ids]
         list_amount = [int(i) for i in list_amount]
 
+        order_case = case(
+            {id: index for index, id in enumerate(list_ids)}, value=Product.id)
+
         list_products: list[Product] = Product.query.filter(
-            Product.id.in_(list_ids)).all()
+            Product.id.in_(list_ids)).order_by(order_case).all()
 
         list_unit_total = []
         for product, amount in zip(list_products, list_amount):
             list_unit_total.append(product.price * amount)
-            # product.amount -= amount
+            product.amount -= amount
         total_order = sum(list_unit_total)
 
         db.session.commit()
